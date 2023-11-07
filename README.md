@@ -140,12 +140,14 @@ The model is loaded and put inside a web service called `price_prediction` using
 
 1. **Build the Docker Image:**
    - Use the following command to build the Docker image:
+
    ```bash
    docker build -t uber-price-prediction .
    ```
 
 2. **Run the Docker Container:**
    - Start a container locally using the following command:
+
    ```bash
    docker run -it -p 9696:9696 uber-price-prediction:latest
    ```
