@@ -4,6 +4,8 @@
 
 **Current solution:** Let's also imagine that right now, Uber has a simple model for predicting price with just one parameter - distance. This model will represent our baseline model.
 
+**Main use case:** The output of the model will be used in the app to show customers the price for the ride that they requested.
+
 ---
 
 ## Table of Contents
