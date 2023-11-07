@@ -14,6 +14,7 @@ seaborn = "*"
 matplotlib = "*"
 scikit-learn = "*"
 folium = "*"
+gunicorn = "*"
 
 [dev-packages]
 
