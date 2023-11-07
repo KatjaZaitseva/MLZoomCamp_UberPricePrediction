@@ -1,2 +1,5 @@
 # MLZoomCamp_UberPricePrediction
-The goal of this project is to predict the price of an Uber ride given some of the feature values
+
+Business objective: Let's imagine we are working in Uber - the taxi company where the user may open the app and order a taxi service from different locations around the city. First, the user allows to detect his location, as the next step he chooses the location where he wants to get. Just with these variables, the app should return to the user a price which will help the user to make the final decision - to make an order or not. Here comes the important problem for the app - to show the price which will not scare off the user and at the same allow the business to reman profitable. Even though, for the customer it may seem that the price is defined only by the distance, we may consider different factors - what is the weather right now, what is the saturation level of the city, wich cab was ordered, was it Business class or will the user travel with a pet or not. The goal of this project will be to predict the price for the taxi with parameters which go beyond the distance.
+
+Current solution: Let's also imagine that right now, Uber has a simple model for predicting price with just one parameter - distance. This model will represent our baseline model.
