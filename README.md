@@ -156,4 +156,61 @@ The model is loaded and put inside a web service called `price_prediction` using
 
 3. **Access the Application:**
    - Double-check the `url` variable in the `test.py` script located in the `testing` folder so that the port matches with the one that we used to run the docker container: `http://localhost:9696/predict`. After making all changes, execute the `test.py` script. This will enable you to view the response in JSON format, displaying the predicted price for the requested ride.
+
+### Deployment to AWS Elastic Beanstalk using `awsebcli`
+
+As the final step, we deploy our docker container built in the previous step to the cloud.
+
+1. **AWS Account and Access Keys:**
+   - Ensure you have an active AWS account before deploying to Elastic Beanstalk using `awsebcli`. You can follow the instructions on how to create the account in AWS in [this article](https://mlbookcamp.com/article/aws)
+   - You'll need the Access Key ID and Secret Access Key associated with your AWS account to configure `awsebcli`. To find it, go to Identity and Access Management (IAM) in AWS -> Users -> NameOfCreatedUser -> Security credentials -> Create access keys. These Access Keys are used for authentication to AWS services.
   
+2. **Install and Configure `awsebcli` in your virtual environment:**
+   - Install `awsebcli` by running:
+   ```bash
+   pipenv install awsebcli --dev
+   ```
+   - Configure `awsebcli` by running:
+   ```bash
+   eb init -p docker -r eu-west-3 price-prediction-serving
+   ```
+   - By the command `-p` you can specify which platform you want to use (e.g. for the current project docker was replaced with `Docker running on 64bit Amazon Linux 2` due to the [bug about Generic Docker](https://github.com/awsdocs/aws-elastic-beanstalk-developer-guide/issues/149#issue-1634369387))
+   - By the command `-r` you can specify the region. I used `eu-west-3` but Alexey said that `eu-west-1` is cheaper (:
+   - `price-prediction-serving` - name of the Elastic Beanstalk
+
+3. **Test locally**
+   - Before we deploy our Dockerized application, we can test it locally by running:
+   ```bash
+   eb local run --port 9696
+   ```
+   - Replace 9696 with your port
+   - Open a new terminal and run
+   ```bash
+   python test.py
+   ```
+
+4. **Deploy to Elastic Beanstalk:**
+   - Deploy Dockerized application to Elastic Beanstalk by executing the following command:
+   ```bash
+   eb create myapp-env
+   ```
+   - Replace myapp-env with your desired environment name. For this project, we used the name `price-prediction-serving-env`
+
+5. **Access the Application:**
+   - After creating the env (which may take some time), we need to copy the link from the row 'Application available at' and update the `url` variable in the `test-aws.py` script. Now, we are using AWS host instead of localhost. After making this change, execute the `test-aws.py` script. This will enable you to view the response in JSON format running on AWS service.
+
+The outcomes of the deployment:
+<img width="874" alt="Screenshot 2023-11-08 at 21 29 38" src="https://github.com/KatjaZaitseva/MLZoomCamp_UberPricePrediction/assets/37984099/33c88c2e-c2ce-403c-9f7f-3a52ec102a3c">
+<img width="761" alt="image" src="https://github.com/KatjaZaitseva/MLZoomCamp_UberPricePrediction/assets/37984099/ac48d09b-5642-4bb2-86d4-73c3a67306f8">
+<img width="980" alt="image" src="https://github.com/KatjaZaitseva/MLZoomCamp_UberPricePrediction/assets/37984099/cfab9bf4-12ec-4bde-b8ca-54c4de2564dc">
+
+6. **Terminate the environment:**
+
+```bash
+eb terminate myapp-env
+```
+<img width="867" alt="image" src="https://github.com/KatjaZaitseva/MLZoomCamp_UberPricePrediction/assets/37984099/b9392366-432d-47a7-a1ab-a26935601221">
+
+<img width="1047" alt="image" src="https://github.com/KatjaZaitseva/MLZoomCamp_UberPricePrediction/assets/37984099/ab7e86f0-dbf5-4960-bbe2-be18afd0eafe">
+
+
